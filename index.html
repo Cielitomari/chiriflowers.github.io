@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CHIRIFLOWERS - Tienda online detalles con amor para toda ocasión</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
     <header>
@@ -106,15 +107,98 @@
         </div>
     </div>
 
+    <!-- Chatbot -->
+    <div class="chatbot">
+        <div class="chatbot-header" onclick="toggleChatbot()">
+            <i class="fas fa-robot"></i>
+            <span>ChiriBot</span>
+        </div>
+        <div class="chatbot-body" id="chatbotBody">
+            <div class="chatbot-messages" id="chatbotMessages"></div>
+            <input type="text" id="chatbotInput" placeholder="Escribe un mensaje..." onkeypress="handleKeyPress(event)">
+        </div>
+    </div>
+
     <script>
-        function openModal(videoUrl) {
-            document.getElementById('videoFrame').src = videoUrl;
-            document.getElementById('videoModal').style.display = 'block';
+        document.addEventListener('DOMContentLoaded', (event) => {
+            toggleChatbot();
+            greetUser();
+        });
+
+        function greetUser() {
+            var greetingMessage = '¡Hola! Soy ChiriBot. ¿En qué puedo ayudarte hoy?';
+            addMessageToChat('bot', greetingMessage);
+            showOptions();
         }
 
-        function closeModal() {
-            document.getElementById('videoFrame').src = '';
-            document.getElementById('videoModal').style.display = 'none';
+        function showOptions() {
+            var options = `
+                <button onclick="selectOption('productos')">Productos</button>
+                <button onclick="selectOption('contacto')">Contactos</button>
+                <button onclick="selectOption('formas de pago')">Formas de Pago</button>
+                <button onclick="selectOption('ofertas del mes')">Ofertas del Mes</button>
+            `;
+            addMessageToChat('bot', options);
+        }
+
+        function selectOption(option) {
+            var response = '';
+            if (option === 'productos') {
+                response = `
+                    <ul>
+                        <li>Ramos y Cajas de Rosas - Desde S/ 70.00</li>
+                        <li>Combos para Toda ocasión - Desde S/ 80.00</li>
+                        <li>Regalos Personalizados - Desde S/ 90.00</li>
+                    </ul>
+                `;
+            } else if (option === 'contacto') {
+                response = 'Puedes contactarnos al 903119923.';
+            } else if (option === 'formas de pago') {
+                response = 'Aceptamos pagos por Yape al número 903119923.';
+            } else if (option === 'ofertas del mes') {
+                response = 'Ofertas del Mes: Combos para Toda ocasión - Desde S/ 80.00';
+            }
+            addMessageToChat('bot', response);
+            setTimeout(showOptions, 1000);
+        }
+
+        function toggleChatbot() {
+            var chatbotBody = document.getElementById('chatbotBody');
+            chatbotBody.style.display = chatbotBody.style.display === 'none' ? 'block' : 'none';
+            if (chatbotBody.style.display === 'block') {
+                greetUser();
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function sendMessage() {
+            var input = document.getElementById('chatbotInput');
+            var message = input.value.trim();
+            if (message) {
+                addMessageToChat('user', message);
+                input.value = '';
+                getChatbotResponse(message);
+            }
+        }
+
+        function addMessageToChat(sender, message) {
+            var messagesDiv = document.getElementById('chatbotMessages');
+            var messageDiv = document.createElement('div');
+            messageDiv.className = 'chatbot-message ' + sender;
+            messageDiv.innerHTML = message;
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function getChatbotResponse(message) {
+            var response = 'Lo siento, no entiendo tu pregunta. Puedes preguntar sobre productos, contacto, formas de pago o ofertas del mes.';
+            addMessageToChat('bot', response);
+            setTimeout(showOptions, 1000);
         }
     </script>
 </body>
