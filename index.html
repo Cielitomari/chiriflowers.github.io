@@ -70,22 +70,22 @@
         <section class="videos">
             <h2>Videos Destacados</h2>
             <div class="video-gallery">
-                <div class="embed-responsive embed-responsive-16by9">
+                <div class="embed-responsive embed-responsive-16by9" onclick="openModal('https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/chiriflowers/videos/833024078791302&show_text=0&width=560')">
                     <iframe class="embed-responsive-item" src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/chiriflowers/videos/833024078791302&show_text=0&width=560" allowfullscreen></iframe>
                 </div>
-                <div class="embed-responsive embed-responsive-16by9">
+                <div class="embed-responsive embed-responsive-16by9" onclick="openModal('https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/chiriflowers/videos/1032369158583845&show_text=0&width=560')">
                     <iframe class="embed-responsive-item" src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/chiriflowers/videos/1032369158583845&show_text=0&width=560" allowfullscreen></iframe>
                 </div>
-                <div class="embed-responsive embed-responsive-16by9">
+                <div class="embed-responsive embed-responsive-16by9" onclick="openModal('https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/chiriflowers/videos/8121593277858944&show_text=0&width=560')">
                     <iframe class="embed-responsive-item" src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/chiriflowers/videos/8121593277858944&show_text=0&width=560" allowfullscreen></iframe>
                 </div>
-                <div class="embed-responsive embed-responsive-16by9">
+                <div class="embed-responsive embed-responsive-16by9" onclick="openModal('https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/chiriflowers/videos/3241062219523058&show_text=0&width=560')">
                     <iframe class="embed-responsive-item" src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/chiriflowers/videos/3241062219523058&show_text=0&width=560" allowfullscreen></iframe>
                 </div>
-                <div class="embed-responsive embed-responsive-16by9">
+                <div class="embed-responsive embed-responsive-16by9" onclick="openModal('https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/chiriflowers/videos/2724413494375389&show_text=0&width=560')">
                     <iframe class="embed-responsive-item" src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/chiriflowers/videos/2724413494375389&show_text=0&width=560" allowfullscreen></iframe>
                 </div>
-                <div class="embed-responsive embed-responsive-16by9">
+                <div class="embed-responsive embed-responsive-16by9" onclick="openModal('https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/chiriflowers/videos/1691370921399975&show_text=0&width=560')">
                     <iframe class="embed-responsive-item" src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/chiriflowers/videos/1691370921399975&show_text=0&width=560" allowfullscreen></iframe>
                 </div>
             </div>
@@ -97,6 +97,26 @@
             <p>Síguenos en <a href="https://www.facebook.com/chiriflowers">Facebook</a></p>
         </div>
     </footer>
+
+    <!-- Modal -->
+    <div id="videoModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+            <iframe id="videoFrame" src="" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <script>
+        function openModal(videoUrl) {
+            document.getElementById('videoFrame').src = videoUrl;
+            document.getElementById('videoModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('videoFrame').src = '';
+            document.getElementById('videoModal').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
 
