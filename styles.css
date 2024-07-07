@@ -2,11 +2,11 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #F77BEA; /* Rojo oscuro */
+    background-color: #F4D1E5; /* Fondo rosa claro */
 }
 
 header {
-    background-color: #9D2C91; /* Rojo oscuro */
+    background-color: #8B0000; /* Rojo oscuro */
     color: white;
     padding: 10px 0;
 }
@@ -34,7 +34,7 @@ header {
 }
 
 nav {
-    background-color: #865B81;
+    background-color: #4B0082; /* Índigo oscuro */
     padding: 10px 0;
 }
 
@@ -86,7 +86,7 @@ nav ul li a {
     display: inline-block;
     margin: 10px;
     padding: 10px 20px;
-    background-color: #e91e63;
+    background-color: #C71585; /* Rojo violeta */
     color: white;
     text-decoration: none;
     border-radius: 5px;
@@ -115,7 +115,7 @@ nav ul li a {
 }
 
 footer {
-    background-color: #333;
+    background-color: #2F4F4F; /* Gris oscuro */
     color: white;
     text-align: center;
     padding: 10px 0;
@@ -129,7 +129,7 @@ footer {
 }
 
 .footer-content a {
-    color: #e91e63;
+    color: #C71585; /* Rojo violeta */
     text-decoration: none;
 }
 
@@ -141,7 +141,7 @@ footer {
 
 .videos h2 {
     margin-bottom: 20px;
-    color: #e91e63;
+    color: #C71585; /* Rojo violeta */
 }
 
 .video-gallery {
