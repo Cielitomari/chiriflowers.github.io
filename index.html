@@ -36,15 +36,18 @@
     </header>
     <main>
         <section class="hero">
-            <img src="05.jpg" alt="Regalos para Enamorados" class="hero-image">
+            <img src="08.jpg" alt="Regalos para Enamorados" class="hero-image">
             <h2>Tienda online detalles con amor para toda ocasión</h2>
             <p>(*) Delivery a todo Chirimoto con costo adicional</p>
             <div class="categories">
-                <a href="#">Rosas</a>
-                <a href="#">Peluches</a>
-                <a href="#">Personalizados</a>
-                <a href="#">Combos</a>
-                <a href="#">Chocolates</a>
+                <a href="armar-regalo.html">Arma tu regalo</a> <!-- Nuevo botón -->
+                <a href="rosas.html">Rosas</a>
+                <a href="peluches.html">Peluches</a>
+                <a href="personalizados.html">Personalizados</a>
+                <a href="chocolates.html">Chocolates</a>
+                <a href="licores.html">Licores</a>
+                <a href="cajas.html">Cajas</a>
+                <a href="canastas.html">Canastas</a>
             </div>
         </section>
 
@@ -137,6 +140,7 @@
                 <button onclick="selectOption('contacto')">Contactos</button>
                 <button onclick="selectOption('formas de pago')">Formas de Pago</button>
                 <button onclick="selectOption('ofertas del mes')">Ofertas del Mes</button>
+                <button onclick="selectOption('arma tu regalo')">Arma tu regalo</button>
             `;
             addMessageToChat('bot', options);
         }
@@ -157,6 +161,8 @@
                 response = 'Aceptamos pagos por Yape al número 903119923.';
             } else if (option === 'ofertas del mes') {
                 response = 'Ofertas del Mes: Combos para Toda ocasión - Desde S/ 80.00';
+            } else if (option === 'arma tu regalo') {
+                response = '<a href="armar-regalo.html">Haz clic aquí para armar tu regalo</a>';
             }
             addMessageToChat('bot', response);
             setTimeout(showOptions, 1000);
@@ -196,11 +202,10 @@
         }
 
         function getChatbotResponse(message) {
-            var response = 'Hola, da clic en nuestras opciones que tenemnos para tí. Puedes preguntar sobre productos, contacto, formas de pago o ofertas del mes.';
+            var response = 'Hola, da clic en nuestras opciones que tenemos para ti. Puedes preguntar sobre productos, contacto, formas de pago o ofertas del mes.';
             addMessageToChat('bot', response);
             setTimeout(showOptions, 1000);
         }
     </script>
 </body>
 </html>
-

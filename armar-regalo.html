@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arma tu regalo - CHIRIFLOWERS</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #F4D1E5; /* Fondo rosa claro */
+        }
+        .custom-gift {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .custom-gift h2 {
+            color: #8B0000; /* Rojo oscuro */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        table th {
+            background-color: #8B0000; /* Rojo oscuro */
+            color: white;
+        }
+        table td img {
+            width: 50px;
+            height: auto;
+        }
+        #selectedProducts {
+            margin-top: 20px;
+        }
+        #selectedProducts ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        #selectedProducts ul li {
+            background-color: #F4D1E5;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        #processOrder {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #8B0000; /* Rojo oscuro */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #processOrder:hover {
+            background-color: #C71585; /* Rojo violeta */
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+        }
+        .modal-content {
+            margin: 15% auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 800px;
+            background-color: white;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+        }
+        .close {
+            position: absolute;
+            right: 25px;
+            top: 15px;
+            color: black;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .modal h2 {
+            color: #8B0000; /* Rojo oscuro */
+        }
+        .whatsapp-button {
+            display: block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #25D366;
+            color: white;
+            font-size: 18px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .whatsapp-button:hover {
+            background-color: #1ebe57;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="top-bar">
+            <div class="logo">
+                <img src="logo.png" alt="Chiriflowers Logo">
+                <h1>CHIRIFLOWERS</h1>
+                <p>Tienda online detalles con amor para toda ocasión</p>
+            </div>
+            <div class="contact-info">
+                <p>Informes y Pedidos</p>
+                <p><strong>903119923</strong></p>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="nosotros.html">Nosotros</a></li>
+                <li><a href="formas-de-pago.html">Formas de Pago</a></li>
+                <li><a href="costos-de-delivery.html">Costos de Delivery</a></li>
+                <li><a href="#ofertas-del-mes">Ofertas del Mes</a></li>
+                <li><a href="#contactenos">Contáctenos</a></li>
+            </ul>
+            <div class="cart-info">
+                <p>Mi Carrito: Usted tiene 0 productos</p>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section class="custom-gift">
+            <h2>Arma tu regalo</h2>
+            <p>Selecciona los productos que deseas agregar a tu regalo y ve el costo total:</p>
+            <table id="productsTable">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Agregar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Aquí se generarán las filas de productos con jQuery -->
+                </tbody>
+            </table>
+            <div id="selectedProducts">
+                <h3>Productos Seleccionados</h3>
+                <ul id="selectedList"></ul>
+                <p id="totalCost">Costo Total: S/ 0.00</p>
+                <button id="processOrder">Procesar Pedido</button>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="footer-content">
+            <p>© 2024 CHIRIFLOWERS. Todos los derechos reservados.</p>
+            <p>Síguenos en <a href="https://www.facebook.com/chiriflowers">Facebook</a></p>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeOrderModal()">&times;</span>
+            <h2>Tu Pedido</h2>
+            <div id="orderDetails"></div>
+            <p id="orderTotal"></p>
+            <button class="whatsapp-button" onclick="sendWhatsAppOrder()">Contactar por WhatsApp</button>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            var products = [
+                { name: 'CHOCOLATE1', price: 8.00, image: 'CHOCO1.jpg' },
+                { name: 'CHOCOLATE2', price: 12.00, image: 'CHOCO2.jpg' },
+                { name: 'CHOCOLATE3', price: 24.00, image: 'CHOCO3.jpg' },
+                { name: 'CHOCOLATE4', price: 10.00, image: 'CHOCO4.jpg' },
+                { name: 'CHOCOLATE5', price: 12.00, image: 'CHOCO5.jpg' },
+                { name: 'PELUCHE1', price: 20.00, image: 'PELUCHE1.jpg' },
+                { name: 'PELUCHE2', price: 10.00, image: 'PELUCHE2.jpg' },
+                { name: 'PELUCHE3', price: 15.00, image: 'PELUCHE3.jpg' },
+                { name: 'PELUCHE4', price: 20.00, image: 'PELUCHE4.jpg' },
+                { name: 'TAZA1', price: 12.00, image: 'PER1.jpg' },
+                { name: 'LAPICERO1', price: 6.00, image: 'PER2.jpeg' },
+                { name: 'LAPICERO2', price: 6.00, image: 'PER3.jpeg' },
+                { name: 'LAPICERO3', price: 6.00, image: 'PER4.jpeg' },
+                { name: 'LAPICERO4', price: 13.00, image: 'PER5.jpeg' },
+                { name: 'ROSA1', price: 6.00, image: 'ROSA1.jpg' },
+                { name: 'ROSA2', price: 6.00, image: 'ROSA2.jpg' },
+                { name: 'ROSA3', price: 6.00, image: 'ROSA3.jpg' },
+                { name: 'ROSA4', price: 10.00, image: 'ROSA4.jpg' },
+                { name: 'LICOR1', price: 7.00, image: 'LICOR1.jpg' },
+                { name: 'LICOR2', price: 25.00, image: 'LICOR2.jpg' },
+                { name: 'CAJA1', price: 5.00, image: 'CAJA1.jpg' },
+                { name: 'CAJA2', price: 5.00, image: 'CAJA2.jpg' },
+                { name: 'CAJA3', price: 7.00, image: 'CAJA3.jpg' },
+                { name: 'CANASTA', price: 12.00, image: 'CANASTA.png' },
+                { name: 'CAFE1', price: 25.00, image: 'CAFE1.jpeg' },
+                { name: 'CAFE2', price: 40.00, image: 'CAFE2.jpeg' },
+            ];
+
+            products.forEach(product => {
+                $('#productsTable tbody').append(`
+                    <tr>
+                        <td><img src="${product.image}" alt="${product.name}" width="50"> ${product.name}</td>
+                        <td>S/ ${product.price.toFixed(2)}</td>
+                        <td><input type="checkbox" class="product-checkbox" data-price="${product.price}" data-name="${product.name}"></td>
+                    </tr>
+                `);
+            });
+
+            $('.product-checkbox').change(function(){
+                var total = 0;
+                var selectedProducts = [];
+                $('.product-checkbox:checked').each(function(){
+                    total += parseFloat($(this).data('price'));
+                    selectedProducts.push($(this).data('name') + ' - S/ ' + parseFloat($(this).data('price')).toFixed(2));
+                });
+                $('#totalCost').text('Costo Total: S/ ' + total.toFixed(2));
+                $('#selectedList').html('');
+                selectedProducts.forEach(product => {
+                    $('#selectedList').append('<li>' + product + '</li>');
+                });
+            });
+
+            $('#processOrder').click(function(){
+                var orderDetails = $('#selectedList').html();
+                var orderTotal = $('#totalCost').text();
+                $('#orderDetails').html('<ul>' + orderDetails + '</ul>');
+                $('#orderTotal').text(orderTotal);
+                $('#orderModal').show();
+            });
+        });
+
+        function closeOrderModal() {
+            $('#orderModal').hide();
+        }
+
+        function sendWhatsAppOrder() {
+            var orderDetails = $('#selectedList').text();
+            var orderTotal = $('#totalCost').text();
+            var message = `Hola, me gustaría hacer el siguiente pedido:\n\n${orderDetails}\n\n${orderTotal}`;
+            var whatsappUrl = `https://wa.me/903119923?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+    </script>
+</body>
+</html>
