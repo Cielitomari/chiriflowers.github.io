@@ -25,6 +25,22 @@
         .custom-gift h2 {
             color: #8B0000; /* Rojo oscuro */
         }
+        .categories {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        .categories button {
+            padding: 10px;
+            background-color: #8B0000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .categories button:hover {
+            background-color: #C71585; /* Rojo violeta */
+        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -56,6 +72,11 @@
             padding: 10px;
             border-radius: 5px;
         }
+        #selectedProducts ul li img {
+            width: 50px;
+            height: auto;
+            margin-right: 10px;
+        }
         #processOrder {
             display: block;
             width: 100%;
@@ -78,10 +99,10 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0,0,0,0.9);
+            background-color: rgba(0,0,0,0.7);
         }
         .modal-content {
-            margin: 15% auto;
+            margin: 5% auto;
             padding: 20px;
             width: 80%;
             max-width: 800px;
@@ -89,6 +110,7 @@
             border-radius: 10px;
             text-align: center;
             position: relative;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         }
         .close {
             position: absolute;
@@ -101,6 +123,24 @@
         }
         .modal h2 {
             color: #8B0000; /* Rojo oscuro */
+        }
+        .modal ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .modal ul li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #F4D1E5;
+            border-radius: 5px;
+        }
+        .modal ul li img {
+            width: 50px;
+            height: auto;
+            margin-right: 10px;
         }
         .whatsapp-button {
             display: block;
@@ -150,6 +190,18 @@
         <section class="custom-gift">
             <h2>Arma tu regalo</h2>
             <p>Selecciona los productos que deseas agregar a tu regalo y ve el costo total:</p>
+            <div class="categories">
+                <button data-category="chocolates">Chocolates</button>
+                <button data-category="peluches">Peluches</button>
+                <button data-category="tazas">Tazas</button>
+                <button data-category="lapiceros">Lapiceros</button>
+                <button data-category="rosas">Rosas</button>
+                <button data-category="licores">Licores</button>
+                <button data-category="cajas">Cajas</button>
+                <button data-category="cafe">Café</button>
+                <button data-category="canastas">Canastas</button>
+                <button data-category="globos">Globos</button>
+            </div>
             <table id="productsTable">
                 <thead>
                     <tr>
@@ -190,58 +242,99 @@
 
     <script>
         $(document).ready(function(){
-            var products = [
-                { name: 'CHOCOLATE1', price: 8.00, image: 'CHOCO1.jpg' },
-                { name: 'CHOCOLATE2', price: 12.00, image: 'CHOCO2.jpg' },
-                { name: 'CHOCOLATE3', price: 24.00, image: 'CHOCO3.jpg' },
-                { name: 'CHOCOLATE4', price: 10.00, image: 'CHOCO4.jpg' },
-                { name: 'CHOCOLATE5', price: 12.00, image: 'CHOCO5.jpg' },
-                { name: 'PELUCHE1', price: 20.00, image: 'PELUCHE1.jpg' },
-                { name: 'PELUCHE2', price: 10.00, image: 'PELUCHE2.jpg' },
-                { name: 'PELUCHE3', price: 15.00, image: 'PELUCHE3.jpg' },
-                { name: 'PELUCHE4', price: 20.00, image: 'PELUCHE4.jpg' },
-                { name: 'TAZA1', price: 12.00, image: 'PER1.jpg' },
-                { name: 'LAPICERO1', price: 6.00, image: 'PER2.jpeg' },
-                { name: 'LAPICERO2', price: 6.00, image: 'PER3.jpeg' },
-                { name: 'LAPICERO3', price: 6.00, image: 'PER4.jpeg' },
-                { name: 'LAPICERO4', price: 13.00, image: 'PER5.jpeg' },
-                { name: 'ROSA1', price: 6.00, image: 'ROSA1.jpg' },
-                { name: 'ROSA2', price: 6.00, image: 'ROSA2.jpg' },
-                { name: 'ROSA3', price: 6.00, image: 'ROSA3.jpg' },
-                { name: 'ROSA4', price: 10.00, image: 'ROSA4.jpg' },
-                { name: 'LICOR1', price: 7.00, image: 'LICOR1.png' },
-                { name: 'LICOR2', price: 25.00, image: 'LICOR2.jpg' },
-                { name: 'CAJA1', price: 5.00, image: 'CAJA1.jpg' },
-                { name: 'CAJA2', price: 5.00, image: 'CAJA2.jpg' },
-                { name: 'CAJA3', price: 7.00, image: 'CAJA3.jpg' },
-                { name: 'CANASTA', price: 12.00, image: 'CANASTA.png' },
-                { name: 'CAFE1', price: 25.00, image: 'CAFE1.jpeg' },
-                { name: 'CAFE2', price: 40.00, image: 'CAFE2.jpeg' },
-                { name: 'globo1', price: 3.00, image: 'globo1.jpg' },
-            ];
+            var products = {
+                chocolates: [
+                    { name: 'CHOCOLATE1', price: 8.00, image: 'CHOCO1.jpg' },
+                    { name: 'CHOCOLATE2', price: 12.00, image: 'CHOCO2.jpg' },
+                    { name: 'CHOCOLATE3', price: 24.00, image: 'CHOCO3.jpg' },
+                    { name: 'CHOCOLATE4', price: 10.00, image: 'CHOCO4.jpg' },
+                    { name: 'CHOCOLATE5', price: 12.00, image: 'CHOCO5.jpg' }
+                ],
+                peluches: [
+                    { name: 'PELUCHE1', price: 20.00, image: 'PELUCHE1.jpg' },
+                    { name: 'PELUCHE2', price: 10.00, image: 'PELUCHE2.jpg' },
+                    { name: 'PELUCHE3', price: 15.00, image: 'PELUCHE3.jpg' },
+                    { name: 'PELUCHE4', price: 20.00, image: 'PELUCHE4.jpg' }
+                ],
+                tazas: [
+                    { name: 'TAZA1', price: 12.00, image: 'PER1.jpg' }
+                ],
+                lapiceros: [
+                    { name: 'LAPICERO1', price: 6.00, image: 'PER2.jpeg' },
+                    { name: 'LAPICERO2', price: 6.00, image: 'PER3.jpeg' },
+                    { name: 'LAPICERO3', price: 6.00, image: 'PER4.jpeg' },
+                    { name: 'LAPICERO4', price: 13.00, image: 'PER5.jpeg' }
+                ],
+                rosas: [
+                    { name: 'ROSA1', price: 6.00, image: 'ROSA1.jpg' },
+                    { name: 'ROSA2', price: 6.00, image: 'ROSA2.jpg' },
+                    { name: 'ROSA3', price: 6.00, image: 'ROSA3.jpg' },
+                    { name: 'ROSA4', price: 10.00, image: 'ROSA4.jpg' }
+                ],
+                licores: [
+                    { name: 'LICOR1', price: 7.00, image: 'LICOR1.png' },
+                    { name: 'LICOR2', price: 25.00, image: 'LICOR2.jpg' }
+                ],
+                cajas: [
+                    { name: 'CAJA1', price: 5.00, image: 'CAJA1.jpg' },
+                    { name: 'CAJA2', price: 5.00, image: 'CAJA2.jpg' },
+                    { name: 'CAJA3', price: 7.00, image: 'CAJA3.jpg' }
+                ],
+                cafe: [
+                    { name: 'CAFE1', price: 25.00, image: 'CAFE1.jpeg' },
+                    { name: 'CAFE2', price: 40.00, image: 'CAFE2.jpeg' }
+                ],
+                canastas: [
+                    { name: 'CANASTA', price: 12.00, image: 'CANASTA.png' }
+                ],
+                globos: [
+                    { name: 'globo1', price: 3.00, image: 'globo1.jpg' }
+                ]
+            };
 
-            products.forEach(product => {
-                $('#productsTable tbody').append(`
-                    <tr>
-                        <td><img src="${product.image}" alt="${product.name}" width="50"> ${product.name}</td>
-                        <td>S/ ${product.price.toFixed(2)}</td>
-                        <td><input type="checkbox" class="product-checkbox" data-price="${product.price}" data-name="${product.name}"></td>
-                    </tr>
-                `);
-            });
+            var selectedProducts = {};
 
-            $('.product-checkbox').change(function(){
+            function loadProducts(category) {
+                $('#productsTable tbody').html('');
+                products[category].forEach(product => {
+                    const checked = selectedProducts[product.name] ? 'checked' : '';
+                    $('#productsTable tbody').append(`
+                        <tr>
+                            <td><img src="${product.image}" alt="${product.name}" width="50"> ${product.name}</td>
+                            <td>S/ ${product.price.toFixed(2)}</td>
+                            <td><input type="checkbox" class="product-checkbox" data-price="${product.price}" data-name="${product.name}" data-image="${product.image}" ${checked}></td>
+                        </tr>
+                    `);
+                });
+
+                $('.product-checkbox').change(function(){
+                    var name = $(this).data('name');
+                    var price = $(this).data('price');
+                    var image = $(this).data('image');
+                    if ($(this).is(':checked')) {
+                        selectedProducts[name] = { price: price, image: image };
+                    } else {
+                        delete selectedProducts[name];
+                    }
+                    updateSelectedProducts();
+                });
+            }
+
+            function updateSelectedProducts() {
                 var total = 0;
-                var selectedProducts = [];
-                $('.product-checkbox:checked').each(function(){
-                    total += parseFloat($(this).data('price'));
-                    selectedProducts.push($(this).data('name') + ' - S/ ' + parseFloat($(this).data('price')).toFixed(2));
-                });
-                $('#totalCost').text('Costo Total: S/ ' + total.toFixed(2));
+                var selectedList = [];
                 $('#selectedList').html('');
-                selectedProducts.forEach(product => {
-                    $('#selectedList').append('<li>' + product + '</li>');
-                });
+                for (var name in selectedProducts) {
+                    total += selectedProducts[name].price;
+                    selectedList.push(`<li><img src="${selectedProducts[name].image}" alt="${name}"> ${name} - S/ ${selectedProducts[name].price.toFixed(2)}</li>`);
+                }
+                $('#totalCost').text('Costo Total: S/ ' + total.toFixed(2));
+                $('#selectedList').html(selectedList.join(''));
+            }
+
+            $('.categories button').click(function(){
+                var category = $(this).data('category');
+                loadProducts(category);
             });
 
             $('#processOrder').click(function(){
@@ -267,3 +360,4 @@
     </script>
 </body>
 </html>
+
